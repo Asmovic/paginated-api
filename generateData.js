@@ -2,9 +2,13 @@ const mongoose = require('mongoose');
 const { faker } = require('@faker-js/faker');
 const User = require('./models/User'); // path to your User model
 
-mongoose.connect(
-  'mongodb+srv://paginated-api:paginated-api-secret@main.emb8pyd.mongodb.net/?retryWrites=true&w=majority'
-);
+require('dotenv').config();
+
+// Connect to MongoDB
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 const createFakeData = async () => {
   console.log('About to create faker data...');

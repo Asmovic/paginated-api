@@ -2,17 +2,16 @@ const express = require('express');
 const mongoose = require('mongoose');
 const User = require('./models/User'); // path to your User model
 
+require('dotenv').config();
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Connect to MongoDB
-mongoose.connect(
-  'mongodb+srv://paginated-api:paginated-api-secret@main.emb8pyd.mongodb.net/?retryWrites=true&w=majority',
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }
-);
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 app.get('/', (req, res) => {
   res.status(200).send('Welcome to Paginated API');
