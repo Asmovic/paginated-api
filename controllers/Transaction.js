@@ -14,7 +14,7 @@ exports.createTransaction = async (req, res) => {
 // Get all transactions
 exports.getAllTransactions = async (req, res) => {
   try {
-    let { page, limit, status, amount } = req.query;
+    let { page, limit, status, amount, reference, destination, startDate, endDate } = req.query;
 
     page = parseInt(page, 10) || 1;
     limit = parseInt(limit, 10) || 10;
@@ -25,8 +25,15 @@ exports.getAllTransactions = async (req, res) => {
       filters.status = new RegExp(status, 'i'); // 'i' for case-insensitive
     }
     if (amount) {
-      filters.amount = new RegExp(amount, 'i');
+      filters.amount = Number(amount);
     }
+    if (reference) {
+      filters.reference = reference;
+    }
+    if (destination) {
+      filters.destination = destination;
+    }
+
 
     const transactions = await Transaction.find(filters)
       .skip((page - 1) * limit)
